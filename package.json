@@ -1,7 +1,7 @@
 {
   "name": "xconsole",
   "version": "0.1.0",
-  "description": "console enhancement for browsers",
+  "description": "Experimental enhanced 'console' for rich text display on modern browsers",
   "main": "xconsole.js",
   "scripts": {},
   "repository": {
