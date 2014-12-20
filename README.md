@@ -17,8 +17,8 @@ Log message with "format specifiers":
 
 You can also chain mutiple styles:
 
-
-    xconsole.log("20px with red foreground".fontSize20.red)
+    
+    xconsole.log("chain styles".fontSize30.red.bgGreen.bold.margin20.padding10)
 
 Style defined later will overhide the same defined earily:
 
@@ -52,14 +52,14 @@ eg.
 ######font style
 bold,italic,oblique,underline,overline,strikethrough
 
-eg.
+e.g.
     
     "bold text".bold
 
 ######font size
 12px~100px
 
-eg.
+e.g.
     
     "30px text".fontSize30
 
@@ -68,7 +68,7 @@ margin,margin-right,margin-left,margin-top,margin-bottom,padding,padding-right,p
 
 1px~100px
 
-eg.
+e.g.
     
     "margin left 10px".marginLeft10
     "padding 20px".padding20
@@ -76,7 +76,7 @@ eg.
 ######none
 No specified style.That may lead to red foreground in `error()`.
 
-eg.
+e.g.
     
     //The followings have the same result
     "no specified style"
@@ -84,4 +84,4 @@ eg.
 
 
 ##author
--<yanni4night@gmail.com>
+ - <yanni4night@gmail.com>
