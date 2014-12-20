@@ -1,5 +1,7 @@
 ##xconsole
 
+[![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url] [![Built with Grunt][grunt-image]][grunt-url] [![Bower version][bower-image]][bower-url]
+
 Experimental(X-) enhanced `console` for rich text display on modern browsers.
 
 Null effects on the obsolete browsers.
@@ -89,3 +91,10 @@ e.g.
 
 ##author
  - <yanni4night@gmail.com>
+
+[david-dm-dev-url]:https://david-dm.org/yanni4night/xconsole#info=devDependencies
+[david-dm-dev-image]:https://david-dm.org/yanni4night/xconsole/dev-status.svg
+[grunt-url]:http://gruntjs.com/
+[grunt-image]: https://cdn.gruntjs.com/builtwith.png
+[bower-url]:http://badge.fury.io/bo/xconsole
+[bower-image]: https://badge.fury.io/bo/xconsole.svg
