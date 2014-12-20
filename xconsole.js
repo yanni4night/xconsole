@@ -18,7 +18,7 @@
   } else if ('undefined' !== typeof define && define.amd) {
     define([], factory);
   } else if ('undefined' !== typeof define && define.cmd) {
-    define(function(require, module, exports) {
+    define(function(require, module) {
       module.exports = factory();
     });
   } else {
@@ -30,7 +30,7 @@
   var expando = '__xconsole-expando__' + (+new Date());
   var origin = expando.replace('expando', 'origin');
 
-  var i, j, len;
+  var i, j, e, len;
 
   function caseCamel(str) {
     return str.replace(/\-([a-z])/g, function(m, n) {
@@ -70,7 +70,7 @@
     setStyle: function(name, style) {
       this.styles[name] = style;
     },
-    getStyle: function(name, style) {
+    getStyle: function(name) {
       return this.styles[name];
     },
     getStyles: function() {
@@ -240,7 +240,7 @@
     };
   }
 
-  for (var e in xconsole) {
+  for (e in xconsole) {
     if ('function' === typeof xconsole[e] && xconsole.hasOwnProperty(e)) {
       xconsole[e].toString = createFnString(e);
     }
