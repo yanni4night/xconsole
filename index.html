@@ -3,15 +3,21 @@
     <head>
         <meta charset="utf-8"/>
         <title>Test for xconsole</title>
-        <style type="text/css"></style>
     </head>
     <body>
+        <center>
+            <h1>Open DevTools</h1>
+        </center>
     </body>
     <script src="xconsole.js"></script>
     <script>
-    xconsole.log('color yellow with green background ,"italic" style and 20 font size'.red.yellow.bgGreen.fontSize20.margin20.italic,'no style','color blue with 50px margin left'.blue.marginLeft50);
-    xconsole.warn('color teal with 40px font size'.colorTeal.fontSize40.margin20.paddingLeft20.bgBlue ,'50px margin left'.marginLeft50);
-    xconsole.debug('color purple'.purple,document.createTextNode,{});
+
+    var props = 'green,bgRed,fontSize40,margin20,marginLeft30,padding10,paddingLeft20,bold,underline'.split(',');
+
+    for(var i=0;i<props.length;++i){
+        var prop = props[i],next = props[props.length === i + 1 ? 0 : i + 1];
+        xconsole.log((prop+ ' with ' + next).replace(/[A-Z]/g,function(n){return ' ' + n.toLowerCase();})[prop][next]);
+    }
 
     xconsole.count('count passed through');
     xconsole.assert(false,'assert passed through');
