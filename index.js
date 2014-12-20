@@ -35,7 +35,11 @@
     });
   }
 
-
+  function nativeConsoleCall(fnName, args) {
+    if ('undefined' !== typeof console && console[fnName]) {
+      return console[fnName].apply(console, args);
+    }
+  }
 
   var Style = {
     styles: {
@@ -58,7 +62,7 @@
     getStyle: function(name, style) {
       return this.styles[name];
     },
-    getStyles: function(){
+    getStyles: function() {
       return this.styles;
     },
     colors: function() {
@@ -85,47 +89,44 @@
     }
   };
 
+  var Expandor = {
+    initialize: function() {
+      for (var e in Style.styles) {
+        this.defineStyle(e);
+      }
+    },
+    defineStrGetter: function(name, fn) {
+      if (Object.prototype.__defineGetter__) {
+        String.prototype.__defineGetter__(name, fn);
+      } else {
+        String.prototype[name] = fn;
+      }
+    },
+    defineStyle: function(style) {
+      this.defineStrGetter(style, function() {
+        //string must be converted to String Object
+        var obj = (this instanceof String) ? this : (new String(this));
+
+        obj[expando] = obj[expando] || [];
+        //We can ignore duplicated keys
+        obj[expando].push(style);
+        return obj;
+      });
+    }
+  };
+
   Style.initialize();
+  Expandor.initialize();
 
-
-  function defineStrGetter(name, fn) {
-    String.prototype.__defineGetter__(name, fn);
-  }
-
-  String.prototype.joinStyle = function() {
-    if (Array.isArray(this[expando])) {
-      return this[expando].map(function(style) {
-        return Style.styles[style] || styles.none;
+  function joinStyle(str) {
+    if (str && Array.isArray(str[expando])) {
+      return str[expando].map(function(style) {
+        return Style.styles[style] || Style.styles.styles.none;
       }).join(';');
     } else {
       return '';
     }
   };
-
-  function defineStyle(style) {
-    defineStrGetter(style, function() {
-      var obj = (this instanceof String) ? this : (new String(this));
-
-      obj[expando] = obj[expando] || [];
-
-      var found;
-      if (~(found = obj[expando].indexOf(style))) {
-        obj[expando].splice(found, 1);
-      }
-      obj[expando].push(style);
-      return obj;
-    });
-  }
-
-  for (var e in Style.styles) {
-    defineStyle(e);
-  }
-
-  function nativeConsoleCall(fnName, args) {
-    if ('undefined' !== typeof console && console[fnName]) {
-      return console[fnName].apply(console, args);
-    }
-  }
 
   var xconsole = {
     getExpando: function() {
@@ -145,7 +146,7 @@
       return item instanceof String ? item : String(item);
     });
     for (i = 0; i < _arguments.length; ++i) {
-      params[i] = _arguments[i].joinStyle();
+      params[i] = joinStyle(_arguments[i]);
     }
     params.unshift([''].concat(_arguments).join('%c'));
     nativeConsoleCall('log', params);
