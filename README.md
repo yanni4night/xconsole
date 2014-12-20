@@ -4,6 +4,8 @@ Experimental enhanced `console` for rich text display on modern browsers.
 
 Null effects on the obsolete browsers.
 
+![preivew](preview.jpg)
+
 ##usage
 
 Log message with "format specifiers":
@@ -43,7 +45,7 @@ And only `log`,`debug`,`info`,`error`,`trace`,`warn` support the format specifie
 ######colors&bg
 aqua,black,blue,fuchsia,gray,green,lime,maroon,navy,olive,orange,purple,red,silver,teal,white,yellow
 
-eg.
+e.g.
     
     //The followings have the same result
     "black text".black

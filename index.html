@@ -3,19 +3,26 @@
     <head>
         <meta charset="utf-8"/>
         <title>Test for xconsole</title>
+        <style>
+            kbd{border-radius: 3px;border:1px solid #ccc;padding: 3px;}
+        </style>
     </head>
     <body>
         <center>
             <h1>Open DevTools</h1>
+            <h6><kbd>F5</kbd> or <kbd>Option</kbd> + <kbd>Command</kbd> + <kbd>I</kbd></h6>
+            <img src="preview.jpg" border="0"/>
         </center>
     </body>
     <script src="xconsole.js"></script>
     <script>
 
-    var props = 'green,bgRed,fontSize40,margin20,marginLeft30,padding10,paddingLeft20,bold,underline'.split(',');
+    var props = 'green,bgRed,fontSize40,marginLeft30,padding20,bold,underline'.split(',');
+
+    var subProps = 'teal,paddingRight100,fontSize20,marginLeft20,italic,bgPurple,strikethrough'.split(',');
 
     for(var i=0;i<props.length;++i){
-        var prop = props[i],next = props[props.length === i + 1 ? 0 : i + 1];
+        var prop = props[i],next = subProps[(i + 1) % subProps.length];
         xconsole.log((prop+ ' with ' + next).replace(/[A-Z]/g,function(n){return ' ' + n.toLowerCase();})[prop][next]);
     }
 
