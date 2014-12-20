@@ -79,7 +79,8 @@
     colors: function() {
       var colors = 'aqua,black,blue,fuchsia,gray,green,lime,maroon,navy,olive,orange,purple,red,silver,teal,white,yellow'.split(',');
       for (i = 0, len = colors.length; i < len; ++i) {
-        this.setStyle(colors[i], 'color:' + colors[i]);
+        this.setStyle(caseCamel('color-' + colors[i]), 'color:' + colors[i]);
+        this.setStyle(colors[i], 'color:' + colors[i]);//alias&shortcut
         this.setStyle(caseCamel('bg-' + colors[i]), 'background-color:' + colors[i]);
       }
     },
