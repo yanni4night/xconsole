@@ -30,7 +30,7 @@
   var expando = '__xconsole-expando__' + (+new Date());
   var origin = expando.replace('expando', 'origin');
 
-  var i, j, e, len;
+  var i, e, len;
 
   function caseCamel(str) {
     return str.replace(/\-([a-z])/g, function(m, n) {
