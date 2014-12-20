@@ -27,37 +27,66 @@
   'use strict';
 
   var expando = '__console-extra__' + (+new Date());
-  var i, len;
+  var i, j, len;
 
-  //todo reset
-  // 'bold,dim,italic,underline,strikethrough'
-  var colors = 'aqua,black,blue,fuchsia,gray,green,lime,maroon,navy,olive,orange,purple,red,silver,teal,white,yellow'.split(',');
+  function caseCamel(str) {
+    return str.replace(/\-([a-z])/g, function(m, n) {
+      return n.toUpperCase();
+    });
+  }
 
-  var styles = {
-    bold: 'font-weight:bold',
-    italic: 'font-style:italic',
-    oblique: 'font-style:oblique',
-    underline: 'text-decoration:underline',
-    overline: 'text-decoration:overline',
-    strikethrough: 'text-decoration:line-through'
+
+
+  var Style = {
+    styles: {
+      none: '',
+      bold: 'font-weight:bold',
+      italic: 'font-style:italic',
+      oblique: 'font-style:oblique',
+      underline: 'text-decoration:underline',
+      overline: 'text-decoration:overline',
+      strikethrough: 'text-decoration:line-through'
+    },
+    initialize: function() {
+      this.colors();
+      this.font();
+      this.boxes();
+    },
+    setStyle: function(name, style) {
+      this.styles[name] = style;
+    },
+    getStyle: function(name, style) {
+      return this.styles[name];
+    },
+    getStyles: function(){
+      return this.styles;
+    },
+    colors: function() {
+      var colors = 'aqua,black,blue,fuchsia,gray,green,lime,maroon,navy,olive,orange,purple,red,silver,teal,white,yellow'.split(',');
+      for (i = 0, len = colors.length; i < len; ++i) {
+        this.setStyle(colors[i], 'color:' + colors[i]);
+        this.setStyle(caseCamel('bg-' + colors[i]), 'background-color:' + colors[i]);
+      }
+    },
+    font: function() {
+      //font size:12~100px
+      for (i = 12; i <= 100; ++i) {
+        this.setStyle('fontSize' + i, 'font-size:' + i + 'px');
+      }
+    },
+    boxes: function() {
+      //boxes:margin/padding 1~100px
+      var boxes = ['margin', 'margin-right', 'margin-left', 'margin-top', 'margin-bottom', 'padding', 'padding-right', 'padding-left', 'padding-top', 'padding-bottom'];
+      for (i = 1; i <= 100; ++i) {
+        for (j = 0, len = boxes.length; j < len; ++j) {
+          this.setStyle(caseCamel(boxes[j]) + i, boxes[j] + ':' + i + 'px');
+        }
+      }
+    }
   };
 
-  for (i = 0, len = colors.length; i < len; ++i) {
-    styles[colors[i]] = 'color:' + colors[i];
-    styles[colors[i] + 'Bg'] = 'background-color:' + colors[i];
-  }
+  Style.initialize();
 
-  for (i = 12; i < 40; ++i) {
-    styles['font' + i] = 'font-size:' + i + 'px';
-  }
-
-  for (i = 1; i < 100; ++i) {
-    styles['margin' + i] = 'margin:' + i + 'px';
-    styles['marginRight' + i] = 'margin-right:' + i + 'px';
-    styles['marginTop' + i] = 'margin-top:' + i + 'px';
-    styles['marginBottom' + i] = 'margin-bottom:' + i + 'px';
-    styles['marginLeft' + i] = 'margin-left:' + i + 'px';
-  }
 
   function defineStrGetter(name, fn) {
     String.prototype.__defineGetter__(name, fn);
@@ -66,7 +95,7 @@
   String.prototype.joinStyle = function() {
     if (Array.isArray(this[expando])) {
       return this[expando].map(function(style) {
-        return styles[style] || '';
+        return Style.styles[style] || styles.none;
       }).join(';');
     } else {
       return '';
@@ -88,7 +117,7 @@
     });
   }
 
-  for (var e in styles) {
+  for (var e in Style.styles) {
     defineStyle(e);
   }
 
@@ -101,8 +130,15 @@
   var xconsole = {
     getExpando: function() {
       return expando;
+    },
+    setStyle: function() {
+      Style.setStyle.apply(Style, arguments);
+    },
+    getStyle: function() {
+      Style.getStyle.apply(Style, arguments);
     }
   };
+
   xconsole.log = function() {
     var joined, params = [];
     var _arguments = Array.prototype.slice.call(arguments).map(function(item) {
