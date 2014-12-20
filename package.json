@@ -1,14 +1,13 @@
 {
-  "name": "console-extra",
+  "name": "xconsole",
   "version": "0.1.0",
   "description": "console enhancement for browsers",
-  "main": "index.js",
+  "main": "xconsole.js",
   "scripts": {
-    "test": "grunt test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yanni4night/console-extra.git"
+    "url": "https://github.com/yanni4night/xconsole.git"
   },
   "keywords": [
     "console"
@@ -16,7 +15,7 @@
   "author": "yanni4night@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/yanni4night/console-extra/issues"
+    "url": "https://github.com/yanni4night/xconsole/issues"
   },
-  "homepage": "https://github.com/yanni4night/console-extra"
+  "homepage": "https://github.com/yanni4night/xconsole"
 }

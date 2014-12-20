@@ -1,6 +1,6 @@
 /**
  * Copyright (C) 2014 yanni4night.com
- * index.js
+ * xconsole.js
  *
  * changelog
  * 2014-12-20[13:26:12]:revised
@@ -27,7 +27,7 @@
 })(this, function() {
   'use strict';
 
-  var expando = '__console-extra-expando__' + (+new Date());
+  var expando = '__xconsole-expando__' + (+new Date());
   var origin = expando.replace('expando', 'origin');
 
   var i, j, len;

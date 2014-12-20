@@ -1,12 +1,12 @@
 {
-  "name": "console-extra",
+  "name": "xconsole",
   "version": "0.1.0",
-  "homepage": "https://github.com/yanni4night/console-extra",
+  "homepage": "https://github.com/yanni4night/xconsole",
   "authors": [
     "yinyong <yanni4night@gmail.com>"
   ],
   "description": "console enhancement for browsers",
-  "main": "index.js",
+  "main": "xconsole.js",
   "moduleType": [
     "amd",
     "globals",
