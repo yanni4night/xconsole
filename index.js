@@ -151,10 +151,13 @@
       return expando;
     },
     setStyle: function() {
-      Style.setStyle.apply(Style, arguments);
+      return Style.setStyle.apply(Style, arguments);
     },
     getStyle: function() {
-      Style.getStyle.apply(Style, arguments);
+      return Style.getStyle.apply(Style, arguments);
+    },
+    getStyles: function() {
+      return Style.getStyles.apply(Style, arguments);
     }
   };
   /**
