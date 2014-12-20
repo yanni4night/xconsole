@@ -9,6 +9,11 @@
     </body>
     <script src="index.js"></script>
     <script>
-    xconsole.log('red'.red.yellow.bgGreen.fontSize100.margin20.italic,'none','blue'.blue);
+    xconsole.log('This should be yellow with green background ,"italic" style and 20 font size'.red.yellow.bgGreen.fontSize20.margin20.italic,'This should be no style','This should be blue with 50px margin left'.blue.marginLeft50);
+    xconsole.warn('This should be yellow with 40px font size'.yellow.fontSize40.margin20.paddingLeft20.bgBlue ,'This should has 50px margin left'.marginLeft50);
+    xconsole.debug('This shoule be purple'.purple,document.createTextNode,{});
+
+    xconsole.count('count passed through');
+    xconsole.assert(false,'assert passed through');
     </script>
 </html>

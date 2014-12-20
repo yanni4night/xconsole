@@ -5,6 +5,7 @@
  * changelog
  * 2014-12-20[13:26:12]:revised
  *
+ * @see https://developer.chrome.com/devtools/docs/console-api
  * @author yanni4night@gmail.com
  * @version 0.1.0
  * @since 0.1.0
@@ -26,13 +27,23 @@
 })(this, function() {
   'use strict';
 
-  var expando = '__console-extra__' + (+new Date());
+  var expando = '__console-extra-expando__' + (+new Date());
+  var origin = expando.replace('expando', 'origin');
+
   var i, j, len;
 
   function caseCamel(str) {
     return str.replace(/\-([a-z])/g, function(m, n) {
       return n.toUpperCase();
     });
+  }
+
+  function isString(obj) {
+    return obj && obj.constructor === String;
+  }
+
+  function isArray(obj) {
+    return Array.isArray ? Array.isArray(obj) : '[object Array]' === ({}).toString.call(obj);
   }
 
   function nativeConsoleCall(fnName, args) {
@@ -96,7 +107,7 @@
       }
     },
     defineStrGetter: function(name, fn) {
-      if (Object.prototype.__defineGetter__) {
+      if (String.prototype.__defineGetter__) {
         String.prototype.__defineGetter__(name, fn);
       } else {
         String.prototype[name] = fn;
@@ -105,7 +116,14 @@
     defineStyle: function(style) {
       this.defineStrGetter(style, function() {
         //string must be converted to String Object
-        var obj = (this instanceof String) ? this : (new String(this));
+        var obj;
+        if (this instanceof String) {
+          obj = this;
+        } else {
+          /*jshint -W053 */
+          obj = new String(this);
+          obj[origin] = this;
+        }
 
         obj[expando] = obj[expando] || [];
         //We can ignore duplicated keys
@@ -119,14 +137,14 @@
   Expandor.initialize();
 
   function joinStyle(str) {
-    if (str && Array.isArray(str[expando])) {
+    if (str && isArray(str[expando])) {
       return str[expando].map(function(style) {
         return Style.styles[style] || Style.styles.styles.none;
       }).join(';');
     } else {
       return '';
     }
-  };
+  }
 
   var xconsole = {
     getExpando: function() {
@@ -139,20 +157,76 @@
       Style.getStyle.apply(Style, arguments);
     }
   };
+  /**
+   * Strings with styles must be in the front of arguments.
+   *
+   * log("red".red,{},function(){},"blue".blue)
+   *   =>console.log("%cred","color:red",{},function(){},"blue")
+   *
+   * log("red".red,"blue".blue,{},function(){})
+   *   =>console.log("%cred%cblue","color:red","color:blue",{},function(){})
+   *
+   * log({},function(){},"red".red)
+   *   =>console.log({},function(){},"red")
+   *
+   */
+  function createEnhanceFn(name) {
+    return function() {
+      var _arguments = Array.prototype.slice.call(arguments);
 
-  xconsole.log = function() {
-    var joined, params = [];
-    var _arguments = Array.prototype.slice.call(arguments).map(function(item) {
-      return item instanceof String ? item : String(item);
-    });
-    for (i = 0; i < _arguments.length; ++i) {
-      params[i] = joinStyle(_arguments[i]);
-    }
-    params.unshift([''].concat(_arguments).join('%c'));
-    nativeConsoleCall('log', params);
+      var arg, frontStrs = [],
+        left = [],
+        params = [],
+        styles = [],
+        ignoring = false;
 
-    return this;
-  };
+      //"format specifiers" requires the first argument to be a string
+      for (i = 0, len = _arguments.length; i < len; ++i) {
+        arg = _arguments[i];
+
+        if (!ignoring && !isString(arg)) {
+          ignoring = true;
+        }
+
+        if (ignoring) {
+          if (isString(arg)) {
+            left.push(arg[origin] || arg);
+          } else {
+            left.push(arg);
+          }
+        } else {
+          styles.push(joinStyle(arg));
+          frontStrs.push(arg);
+        }
+      }
+
+      if (frontStrs.length) {
+        params.push([''].concat(frontStrs).join('%c'));
+        params = params.concat(styles);
+      }
+
+      nativeConsoleCall(name, params.concat(left));
+
+      return this;
+    };
+  }
+
+  function createPassThroughFn(name) {
+    return function() {
+      nativeConsoleCall(name, arguments);
+    };
+  }
+
+  //functions with "format specifiers" supported
+  var fns = 'log,debug,info,error,trace,warn'.split(',');
+  for (i = 0, len = fns.length; i < len; ++i) {
+    xconsole[fns[i]] = createEnhanceFn(fns[i]);
+  }
+
+  var passThroughFns = 'assert,clear,count,dirxml,dir,groupCollapsed,group,groupEnd,timeStamp,profile,profileEnd,table,time,timeEnd'.split(',');
+  for (i = 0, len = passThroughFns.length; i < len; ++i) {
+    xconsole[passThroughFns[i]] = createPassThroughFn(passThroughFns[i]);
+  }
 
   return xconsole;
 });
