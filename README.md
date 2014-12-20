@@ -1,8 +1,10 @@
 ##xconsole
 
-Experimental enhanced `console` for rich text display on modern browsers.
+Experimental(X-) enhanced `console` for rich text display on modern browsers.
 
 Null effects on the obsolete browsers.
+
+Inspired by [colors](https://www.npmjs.com/package/colors).
 
 ![preivew](preview.jpg)
 
