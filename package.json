@@ -1,0 +1,22 @@
+{
+  "name": "console-extra",
+  "version": "0.1.0",
+  "description": "console enhancement for browsers",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yanni4night/console-extra.git"
+  },
+  "keywords": [
+    "console"
+  ],
+  "author": "yanni4night@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yanni4night/console-extra/issues"
+  },
+  "homepage": "https://github.com/yanni4night/console-extra"
+}
