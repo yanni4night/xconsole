@@ -80,7 +80,7 @@
       var colors = 'aqua,black,blue,fuchsia,gray,green,lime,maroon,navy,olive,orange,purple,red,silver,teal,white,yellow'.split(',');
       for (i = 0, len = colors.length; i < len; ++i) {
         this.setStyle(caseCamel('color-' + colors[i]), 'color:' + colors[i]);
-        this.setStyle(colors[i], 'color:' + colors[i]);//alias&shortcut
+        this.setStyle(colors[i], 'color:' + colors[i]); //alias&shortcut
         this.setStyle(caseCamel('bg-' + colors[i]), 'background-color:' + colors[i]);
       }
     },
@@ -230,6 +230,18 @@
   var passThroughFns = 'assert,clear,count,dirxml,dir,groupCollapsed,group,groupEnd,timeStamp,profile,profileEnd,table,time,timeEnd'.split(',');
   for (i = 0, len = passThroughFns.length; i < len; ++i) {
     xconsole[passThroughFns[i]] = createPassThroughFn(passThroughFns[i]);
+  }
+
+  function createFnString(name) {
+    return function() {
+      return 'function ' + name + '() { [custom code] }';
+    };
+  }
+
+  for (var e in xconsole) {
+    if ('function' === typeof xconsole[e] && xconsole.hasOwnProperty(e)) {
+      xconsole[e].toString = createFnString(e);
+    }
   }
 
   return xconsole;
