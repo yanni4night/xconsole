@@ -78,7 +78,7 @@
     },
     colors: function() {
       var colors = 'aqua,black,blue,fuchsia,gray,green,lime,maroon,navy,olive,orange,purple,red,silver,teal,white,yellow'.split(',');
-      for (i = 0, len = colors.length; i < len; ++i) {
+      for (var i = 0, len = colors.length; i < len; ++i) {
         this.setStyle(caseCamel('color-' + colors[i]), 'color:' + colors[i]);
         this.setStyle(colors[i], 'color:' + colors[i]); //alias&shortcut
         this.setStyle(caseCamel('bg-' + colors[i]), 'background-color:' + colors[i]);
@@ -86,15 +86,15 @@
     },
     font: function() {
       //font size:12~100px
-      for (i = 12; i <= 100; ++i) {
+      for (var i = 12; i <= 100; ++i) {
         this.setStyle('fontSize' + i, 'font-size:' + i + 'px');
       }
     },
     boxes: function() {
       //boxes:margin/padding 1~100px
       var boxes = ['margin', 'margin-right', 'margin-left', 'margin-top', 'margin-bottom', 'padding', 'padding-right', 'padding-left', 'padding-top', 'padding-bottom'];
-      for (i = 1; i <= 100; ++i) {
-        for (j = 0, len = boxes.length; j < len; ++j) {
+      for (var i = 1; i <= 100; ++i) {
+        for (var j = 0, len = boxes.length; j < len; ++j) {
           this.setStyle(caseCamel(boxes[j]) + i, boxes[j] + ':' + i + 'px');
         }
       }
@@ -187,7 +187,7 @@
         ignoring = false;
 
       //"format specifiers" requires the first argument to be a string
-      for (i = 0, len = _arguments.length; i < len; ++i) {
+      for (var i = 0, len = _arguments.length; i < len; ++i) {
         arg = _arguments[i];
 
         if (!ignoring && !isString(arg)) {
