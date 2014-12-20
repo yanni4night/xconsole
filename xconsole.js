@@ -111,7 +111,7 @@
       if (String.prototype.__defineGetter__) {
         String.prototype.__defineGetter__(name, fn);
       } else {
-        String.prototype[name] = fn;
+        String.prototype[name] = '';
       }
     },
     defineStyle: function(style) {
@@ -138,10 +138,12 @@
   Expandor.initialize();
 
   function joinStyle(str) {
-    if (str && isArray(str[expando])) {
-      return str[expando].map(function(style) {
-        return Style.styles[style] || Style.styles.styles.none;
-      }).join(';');
+    if (str && isArray(str[expando]) && str[expando].length) {
+      var styles = [];
+      for (var i = 0, len = str[expando].length; i < len; ++i) {
+        styles.push(Style.styles[str[expando][i]] || Style.styles.none);
+      }
+      return styles.join(';');
     } else {
       return '';
     }
