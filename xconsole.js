@@ -88,15 +88,20 @@
       }
     },
     font: function() {
-      //font size:12~100px
-      for (var i = 12; i <= 100; ++i) {
+      //font size:12~30,40,50...100px
+      for (var i = 12; i <= 100;) {
         this.setStyle('fontSize' + i, 'font-size:' + i + 'px');
+        if (i < 30) {
+          ++i;
+        } else {
+          i += 10;
+        }
       }
     },
     boxes: function() {
-      //boxes:margin/padding 1~100px
+      //boxes:margin/padding 0,5,15...100px
       var boxes = ['margin', 'margin-right', 'margin-left', 'margin-top', 'margin-bottom', 'padding', 'padding-right', 'padding-left', 'padding-top', 'padding-bottom'];
-      for (var i = 1; i <= 100; ++i) {
+      for (var i = 0; i <= 100; i += 5) {
         for (var j = 0, len = boxes.length; j < len; ++j) {
           this.setStyle(caseCamel(boxes[j]) + i, boxes[j] + ':' + i + 'px');
         }

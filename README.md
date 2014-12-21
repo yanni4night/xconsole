@@ -63,7 +63,7 @@ e.g.
     "bold text".bold
 
 ######font size
-12px~100px
+12~30,40,40...100px
 
 e.g.
     
@@ -72,7 +72,7 @@ e.g.
 ######margin&padding
 margin,margin-right,margin-left,margin-top,margin-bottom,padding,padding-right,padding-left,padding-top,padding-bottom
 
-1px~100px
+0,5,15...100px
 
 e.g.
     
