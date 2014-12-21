@@ -9,7 +9,8 @@
     "url": "https://github.com/yanni4night/xconsole.git"
   },
   "keywords": [
-    "console"
+    "console",
+    "xconsole"
   ],
   "author": "yanni4night@gmail.com",
   "license": "MIT",

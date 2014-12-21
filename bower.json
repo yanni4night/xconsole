@@ -13,7 +13,8 @@
     "node"
   ],
   "keywords": [
-    "console"
+    "console",
+    "xconsole"
   ],
   "license": "MIT",
   "ignore": [
