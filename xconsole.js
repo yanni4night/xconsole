@@ -4,10 +4,11 @@
  *
  * changelog
  * 2014-12-20[13:26:12]:revised
+ * 2014-12-21[14:26:01]:portable to opera(presto)
  *
  * @see https://developer.chrome.com/devtools/docs/console-api
  * @author yanni4night@gmail.com
- * @version 0.1.0
+ * @version 0.1.1
  * @since 0.1.0
  */
 (function(global, factory) {
@@ -29,6 +30,8 @@
 
   var expando = '__xconsole-expando__' + (+new Date());
   var origin = expando.replace('expando', 'origin');
+  //opera presto does not support "format specifiers" but we cannot detect that
+  var presto = 'object' === typeof opera && 'function' === typeof opera.version && opera.version() < '13';
 
   var i, e, len;
 
@@ -109,7 +112,13 @@
     },
     defineStrGetter: function(name, fn) {
       if (String.prototype.__defineGetter__) {
-        String.prototype.__defineGetter__(name, fn);
+        if (presto) {
+          String.prototype.__defineGetter__(name, function() {
+            return this.toString();
+          });
+        } else {
+          String.prototype.__defineGetter__(name, fn);
+        }
       } else {
         String.prototype[name] = '';
       }
@@ -225,8 +234,9 @@
 
   //functions with "format specifiers" supported
   var fns = 'log,debug,info,error,trace,warn'.split(',');
+
   for (i = 0, len = fns.length; i < len; ++i) {
-    xconsole[fns[i]] = createEnhanceFn(fns[i]);
+    xconsole[fns[i]] = presto ? createPassThroughFn(fns[i]) : createEnhanceFn(fns[i]);
   }
 
   var passThroughFns = 'assert,clear,count,dirxml,dir,groupCollapsed,group,groupEnd,timeStamp,profile,profileEnd,table,time,timeEnd'.split(',');

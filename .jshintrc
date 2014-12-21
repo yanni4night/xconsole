@@ -18,6 +18,7 @@
     "module": true,
     "define": true,
     "console": true,
+    "opera": true,
     "exports": true
   }
 }
