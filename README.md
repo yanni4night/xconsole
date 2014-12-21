@@ -63,7 +63,7 @@ e.g.
     "bold text".bold
 
 ######font size
-12~30,40,40...100px
+12~30,40,50...100px
 
 e.g.
     
