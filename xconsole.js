@@ -5,6 +5,7 @@
  * changelog
  * 2014-12-20[13:26:12]:revised
  * 2014-12-21[14:26:01]:portable to opera(presto)
+ * 2014-12-21[16:12:22]:format specifiers supported for 'groupCollapsed','group'
  *
  * @see https://developer.chrome.com/devtools/docs/console-api
  * @author yanni4night@gmail.com
@@ -239,13 +240,13 @@
   }
 
   //functions with "format specifiers" supported
-  var fns = 'log,debug,info,error,trace,warn'.split(',');
+  var fns = 'log,debug,info,error,trace,warn,groupCollapsed,group'.split(',');
 
   for (i = 0, len = fns.length; i < len; ++i) {
     xconsole[fns[i]] = presto ? createPassThroughFn(fns[i]) : createEnhanceFn(fns[i]);
   }
 
-  var passThroughFns = 'assert,clear,count,dirxml,dir,groupCollapsed,group,groupEnd,timeStamp,profile,profileEnd,table,time,timeEnd'.split(',');
+  var passThroughFns = 'assert,clear,count,dirxml,dir,groupEnd,timeStamp,profile,profileEnd,table,time,timeEnd'.split(',');
   for (i = 0, len = passThroughFns.length; i < len; ++i) {
     xconsole[passThroughFns[i]] = createPassThroughFn(passThroughFns[i]);
   }

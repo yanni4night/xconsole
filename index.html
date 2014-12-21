@@ -17,16 +17,32 @@
     <script src="xconsole.js"></script>
     <script>
 
-    var props = 'green,bgRed,fontSize40,marginLeft30,padding20,bold,underline'.split(',');
+    xconsole.clear();
 
-    var subProps = 'teal,paddingRight100,fontSize20,marginLeft20,italic,bgPurple,strikethrough'.split(',');
+    xconsole.group('Group -->'.fontSize20.bold.teal);
+        xconsole.log('Green color'.green);
+        xconsole.log('Red background color'.bgRed);
+        xconsole.log('30 px font size'.fontSize30);
+        xconsole.log('30 px left margin'.marginLeft30);
+        xconsole.log('30 px left padding'.paddingLeft30);
+        xconsole.info('Bold'.bold);
+        xconsole.debug('Underline'.underline);
+        xconsole.warn('Italic'.italic);
+        xconsole.trace('Overline'.overline);
+        xconsole.error('Strikethrough'.strikethrough);
+    xconsole.groupEnd();
 
-    for(var i=0;i<props.length;++i){
-        var prop = props[i],next = subProps[(i + 1) % subProps.length];
-        xconsole.log((prop+ ' with ' + next).replace(/[A-Z]/g,function(n){return ' ' + n.toLowerCase();})[prop][next]);
-    }
+    xconsole.groupCollapsed("GroupCollapsed -->".fontSize20.bold.teal);
+        xconsole.count('Counter');
+        xconsole.assert(false,'Assert');
+        xconsole.dir(document.body);
+        xconsole.dirxml(document.body);
+        xconsole.timeStamp('TimeStamp');
+        xconsole.time('Time');
+        xconsole.timeEnd();
+        xconsole.profile('Profile');
+        xconsole.profileEnd();
+    xconsole.groupEnd();
 
-    xconsole.count('count passed through');
-    xconsole.assert(false,'assert passed through');
     </script>
 </html>

@@ -26,7 +26,7 @@ You can also chain mutiple styles:
     
     xconsole.log("chain styles".fontSize30.red.bgGreen.bold.margin20.padding10)
 
-Style defined later will overhide the same defined earily:
+Style defined later will override the same defined earily:
 
     
     xconsole.log("yellow foreground but not red".red.yellow)
@@ -37,7 +37,7 @@ Note that only the strings in the front of the arguments support the format spec
     console.log({}, "this will not work".red)
     console.log("this will work".blue, {}, "this will not work".red)
 
-And only `log`,`debug`,`info`,`error`,`trace`,`warn` support the format specifiers,other functions like `assert`,`clear`,`count`,etc. will work as same as in the native `console` object:
+And only `log`,`debug`,`info`,`error`,`trace`,`warn`,`groupCollapsed`,`group` support the format specifiers,other functions like `assert`,`clear`,`count`,etc. will work as same as in the native `console` object:
 
     
     xconsole.count()
@@ -80,7 +80,7 @@ e.g.
     "padding 20px".padding20
 
 ######none
-No specified style.That may lead to red foreground in `error()`.
+No specified style.The actual style depends on the implemention.
 
 e.g.
     
