@@ -164,6 +164,7 @@
   }
 
   var xconsole = {
+    version: '0.1.0',
     getExpando: function() {
       return expando;
     },
