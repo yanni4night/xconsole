@@ -61,7 +61,7 @@ e.g.
     "black text".colorBlack
 
 ######font style
-bold,italic,oblique,underline,overline,strikethrough
+bold,italic,oblique,underline,overline,strikethrough,monospace
 
 e.g.
     

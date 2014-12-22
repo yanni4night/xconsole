@@ -89,7 +89,8 @@
         oblique: 'font-style:oblique',
         underline: 'text-decoration:underline',
         overline: 'text-decoration:overline',
-        strikethrough: 'text-decoration:line-through'
+        strikethrough: 'text-decoration:line-through',
+        monospace: 'font-family:monospace'
       };
 
       for (var e in customs) {
