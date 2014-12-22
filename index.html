@@ -29,7 +29,7 @@
         xconsole.debug('Underline'.underline);
         xconsole.warn('Italic'.italic);
         xconsole.trace('Overline'.overline);
-        xconsole.error('Strikethrough'.strikethrough);
+        xconsole.error('Strike through'.strikethrough);
     xconsole.groupEnd();
 
     xconsole.groupCollapsed("GroupCollapsed -->".fontSize20.bold.teal);
@@ -43,6 +43,9 @@
         xconsole.profile('Profile');
         xconsole.profileEnd();
     xconsole.groupEnd();
+
+    xconsole.setStyle('lineHeight3em','line-height:3em');
+    xconsole.log("custom style:line height 3em".fontSize20.lineHeight3em);
 
     </script>
 </html>

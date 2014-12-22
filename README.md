@@ -43,6 +43,11 @@ And only `log`,`debug`,`info`,`error`,`trace`,`warn`,`groupCollapsed`,`group` su
     xconsole.count()
     xconsole.assert(true)
 
+You can define custom styles:
+
+    
+    xconsole.setStyle('lineHeight3em', 'line-height:3em')
+    xconsole.log('3em line height'.lineHeight3em)
 
 ##api
 

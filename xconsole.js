@@ -6,10 +6,11 @@
  * 2014-12-20[13:26:12]:revised
  * 2014-12-21[14:26:01]:portable to opera(presto)
  * 2014-12-21[16:12:22]:format specifiers supported for 'groupCollapsed','group'
+ * 2014-12-22[15:13:31]:remove expandor,fixed not working in 'setStyle'
  *
  * @see https://developer.chrome.com/devtools/docs/console-api
  * @author yanni4night@gmail.com
- * @version 0.1.1
+ * @version 0.1.2
  * @since 0.1.0
  */
 (function(global, factory) {
@@ -43,7 +44,7 @@
   }
 
   function isString(obj) {
-    return obj && obj.constructor === String;
+    return 'string' === typeof obj || (obj && obj.constructor === String);
   }
 
   function isArray(obj) {
@@ -57,28 +58,43 @@
   }
 
   var Style = {
-    styles: {
-      none: '',
-      bold: 'font-weight:bold',
-      italic: 'font-style:italic',
-      oblique: 'font-style:oblique',
-      underline: 'text-decoration:underline',
-      overline: 'text-decoration:overline',
-      strikethrough: 'text-decoration:line-through'
-    },
+    styles: {},
     initialize: function() {
+      this.custom();
       this.colors();
       this.font();
       this.boxes();
     },
     setStyle: function(name, style) {
+      if (!isString(name) || !isString(style)) {
+        throw new TypeError('"name" and "style" both should be strings');
+      }
       this.styles[name] = style;
+      this.defineStyle(name);
     },
     getStyle: function(name) {
+      if (!isString(name)) {
+        throw new TypeError('"name" should be a string');
+      }
       return this.styles[name];
     },
     getStyles: function() {
       return this.styles;
+    },
+    custom: function() {
+      var customs = {
+        none: '',
+        bold: 'font-weight:bold',
+        italic: 'font-style:italic',
+        oblique: 'font-style:oblique',
+        underline: 'text-decoration:underline',
+        overline: 'text-decoration:overline',
+        strikethrough: 'text-decoration:line-through'
+      };
+
+      for (var e in customs) {
+        this.setStyle(e, customs[e]);
+      }
     },
     colors: function() {
       var colors = 'aqua,black,blue,fuchsia,gray,green,lime,maroon,navy,olive,orange,purple,red,silver,teal,white,yellow'.split(',');
@@ -106,14 +122,6 @@
         for (var j = 0, len = boxes.length; j < len; ++j) {
           this.setStyle(caseCamel(boxes[j]) + i, boxes[j] + ':' + i + 'px');
         }
-      }
-    }
-  };
-
-  var Expandor = {
-    initialize: function() {
-      for (var e in Style.styles) {
-        this.defineStyle(e);
       }
     },
     defineStrGetter: function(name, fn) {
@@ -150,7 +158,6 @@
   };
 
   Style.initialize();
-  Expandor.initialize();
 
   function joinStyle(str) {
     if (str && isArray(str[expando]) && str[expando].length) {
