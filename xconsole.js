@@ -90,7 +90,9 @@
         underline: 'text-decoration:underline',
         overline: 'text-decoration:overline',
         strikethrough: 'text-decoration:line-through',
-        monospace: 'font-family:monospace'
+        monospace: 'font-family:monospace',
+        yahei: 'font-family:"Microsoft YAHEI"',
+        simsun: 'font-family:simsun'
       };
 
       for (var e in customs) {
